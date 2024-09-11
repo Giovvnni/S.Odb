@@ -15,7 +15,7 @@ def get_db():
     finally:
         db.close()
 
-
+#xd
 @app.post("/usuarios/", response_model=schemas.UsuarioResponse)
 def create_usuario(usuario: schemas.UsuarioCreate, db: Session = Depends(get_db)):
     db_usuario = models.Usuario(**usuario.dict())
