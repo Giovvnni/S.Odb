@@ -1,6 +1,6 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, Boolean, Date
 from sqlalchemy.orm import relationship
-from database import Base
+from API.database import Base
 
 # Tabla Usuario
 class Usuario(Base):
@@ -31,6 +31,9 @@ class Meme(Base):
     usuario = relationship("Usuario", back_populates="memes")
     comentarios = relationship("Comentario", back_populates="meme")
     votos = relationship("Voto", back_populates="meme")
+    etiquetas = relationship("Etiqueta", back_populates="meme")
+    categorias = relationship("Categoria", back_populates="meme")
+
 
 
 # Tabla Comentario
@@ -51,6 +54,11 @@ class Etiqueta(Base):
     __tablename__ = "etiqueta"
     etiqueta_id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=True)
+    meme_id = Column(Integer, ForeignKey("meme.meme_id"), nullable=False)
+
+    meme = relationship("Meme", back_populates="etiquetas")
+
+
 
 
 # Tabla Categoria
@@ -58,6 +66,10 @@ class Categoria(Base):
     __tablename__ = "categoria"
     categoria_id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String, nullable=False, default="Cualquiera")
+    meme_id = Column(Integer, ForeignKey("meme.meme_id"), nullable=False)
+
+    meme = relationship("Meme", back_populates="categorias")
+
 
 
 # Tabla Voto
